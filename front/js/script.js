@@ -8,7 +8,7 @@ fetch("http://localhost:3000/api/products")
 //Injection sur la page des produits récupérés avec une boucle "for"
         for(product of apiProducts) { 
             sectionItems.innerHTML += 
-                `<a href="./product.html?id=${product.id}">
+                `<a href="./product.html?id=${product._id}">
                     <article>
                         <img src=${product.imageUrl} alt=${product.altText}>
                         <h3 class="productName">${product.name}</h3>
