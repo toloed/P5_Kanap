@@ -27,10 +27,3 @@ function getProduct(product) {
     });
 }
 
-function newFunction(product) {
-    const itemImg = document.createElement("img");
-    document.querySelector(".item__img")
-        .appendChild(itemImg);
-    itemImg.src = product.imageUrl;
-    itemImg.alt = product.altTxt;
-}
