@@ -18,9 +18,9 @@ function getProduct(product) {
     document.getElementById("description").innerHTML = `${product.description}`;
     
     //Ajout des options de couleur via une boucle forEach
-    id.colors.forEach(color => {
+    product.colors.forEach(color => {
         const optionColor = document.createElement("option");
-        doncument.getElementById("colors")
+        document.getElementById("colors")
             .appendChild(optionColor);
         optionColor.value = color;
         optionColor.textContent = color;
