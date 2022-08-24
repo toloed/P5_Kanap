@@ -1,7 +1,7 @@
+//--------------------Importation du produit séléctionné en page d'accueil-------------------//
 // Récupération des paramètres URL de l'id
-//const paramsString = window.location.href; // Renvoie les infos URL du document
-const searchParams = new URL(window.location.href); // Instancie un nouvel objet URLSearchParams qui permet la lecture sur la requête URL
-const product = searchParams.searchParams.get("id"); // Accès à la requête URL : renvoie la valeur "id"
+const searchParams = new URL(window.location.href); 
+const product = searchParams.searchParams.get("id");
 
 // Récupération d'un produit via son id
 fetch(`http://localhost:3000/api/products/${product}`)
@@ -27,3 +27,77 @@ function getProduct(product) {
     });
 }
 
+//--------------------Ajout au panier/LocalStorage--------------------//
+// Récupération des informations de l'API nécessaires à l'ajout au panier (id/couleur/quantité)
+const productId = product;
+const productColor = document.getElementById("colors");
+const productQuantity = document.getElementById("quantity");
+
+// Ecoute  du click du bouton html "ajouter au panier" 
+const button = document.getElementById("addToCart");
+button.addEventListener("click", function() {
+    // Références des éléments du produit sélectionné
+    const selectedProduct = {
+        selectedId: productId._id,
+        selectedColor: productColor.value,
+        selectedQuantity: productQuantity.value,
+    } 
+
+    function addToCart() {
+        productFinal.push(selectedProduct); // Ajout de l'élément
+        localStorage.setItem("productResult", JSON.stringify(productFinal)); // Stock les données + conversion objet JS en chaîne JSON
+        alert("Votre produit à été ajouté au panier!");
+    }
+
+    //Conversion chaîne JSON en objet JS + récupération des données
+    let productFinal = JSON.parse(localStorage.getItem("productResult"));
+
+    // Si : Vérification de l'option de couleur
+    if (selectedProduct.selectedColor == "") {
+    alert("Merci de séléctionner une couleur proposée");
+    }
+
+    // Si : Vérification de la quantité comprise entre 1 et 100
+    else if (selectedProduct.selectedQuantity < 1 || selectedProduct.selectedQuantity > 100) {
+        alert("Merci de renseigner une quantité comprise entre 1 et 100");
+    }
+
+    // Sinon :
+    else {
+        // Si : le panier ne contient pas de produit 
+        if (productFinal == null) {
+            productFinal = []; // Création d'un tableau vide
+            //productFinal.push(selectedProduct); // Ajout d'un élément
+            //localStorage.setItem("productResult", JSON.stringify(productFinal)); // Stock les données + conversion objet JS en chaîne JSON
+            //alert("Votre produit à été ajouté au panier!");
+            addToCart();
+        }
+
+        // Si : le panier contient déjà des produits
+        else if (productFinal != null) {
+            // Parcours du LocalStorage pour trouver les éléments demandés
+            let foundProduct = productFinal.find(
+                (element) => // Vérifie que les 2 produits on la même id ET la même couleur
+                    element.selectedId === selectedProduct.selectedId &&
+                    element.selectedColor === selectedProduct.selectedColor
+            );
+
+            // Si : le panier contient un produit avec id+couleur identiques, incrémentation de la nouvelle quantité au LocalStorage
+            if (foundProduct) {
+                let newQuantity = parseInt(foundProduct.selectedQuantity) + parseInt(selectedProduct.selectedQuantity);
+                foundProduct.selectedQuantity = newQuantity;
+                localStorage.setItem("productResult", JSON.stringify(productFinal));
+                alert(`Votre panier contient désormais ${foundProduct.selectedQuantity} exemplaires de ce produit`);
+            }
+
+            // Sinon : le panier ne contient pas de produit avec la même id+couleur, ajout du produit
+            else {
+                //productFinal.push(selectedProduct);
+                //localStorage.setItem("productResult", JSON.stringify(productFinal));
+                //alert("Un nouveau produit a été ajouté à votre panier")
+                addToCart();
+            }
+        }
+
+    }
+})
