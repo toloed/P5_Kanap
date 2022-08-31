@@ -41,8 +41,8 @@ button.addEventListener("click", function() {
         selectedId: productId._id,
         selectedColor: productColor.value,
         selectedQuantity: productQuantity.value,
-    } 
-
+    };
+    
     function addToCart() {
         productFinal.push(selectedProduct); // Ajout de l'élément
         localStorage.setItem("productResult", JSON.stringify(productFinal)); // Stock les données + conversion objet JS en chaîne JSON
@@ -67,9 +67,6 @@ button.addEventListener("click", function() {
         // Si : le panier ne contient pas de produit 
         if (productFinal == null) {
             productFinal = []; // Création d'un tableau vide
-            //productFinal.push(selectedProduct); // Ajout d'un élément
-            //localStorage.setItem("productResult", JSON.stringify(productFinal)); // Stock les données + conversion objet JS en chaîne JSON
-            //alert("Votre produit à été ajouté au panier!");
             addToCart();
         }
 
@@ -92,9 +89,6 @@ button.addEventListener("click", function() {
 
             // Sinon : le panier ne contient pas de produit avec la même id+couleur, ajout du produit
             else {
-                //productFinal.push(selectedProduct);
-                //localStorage.setItem("productResult", JSON.stringify(productFinal));
-                //alert("Un nouveau produit a été ajouté à votre panier")
                 addToCart();
             }
         }
