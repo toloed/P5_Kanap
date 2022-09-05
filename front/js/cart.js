@@ -1,21 +1,20 @@
 //Conversion chaîne JSON en objet JS + récupération des données du LocalStorage
-const productFinal = JSON.parse(localStorage.getItem("productResult"));
-const productId = productFinal.map((id) => id._id);
+const productId = JSON.parse(localStorage.getItem("productResult"));
+
 console.log(productId);
 
 // Si : le panier (LocalStorage) est vide, affichage d'un message
-if (productFinal === null) {
-    document.getElementById("cart__items").innerHTML +=
-        `<h1>Votre panier est vide</h1>`;
-    document.getElementsByClassName("cart__price").style.display ="none";
-    document.getElementsByClassName("cart__order").style.display = "none";
+if (productId === null) {
+    document.querySelector("h1").textContent = `Votre panier est vide.`;
+    document.getElementsByClassName("cart__price").style.display = "none";
+    document.getElementByClassName("cart__order").style.display = "none";
 }
 
 // Sinon : le panier contient des produits
 else {
-    productFinal.forEach(cart => {
+    for (let cart of productId) {
         //console.log(cart.selectedId);
-        let id = cart.productId;
+        //let id = productId.selectedProduct;
         //console.log(productFinal);
 
         fetch(`http://localhost:3000/api/products/${productId}`)
@@ -49,5 +48,5 @@ else {
             </article>`
 
         }
-    })
+    }
 }

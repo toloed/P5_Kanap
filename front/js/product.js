@@ -32,13 +32,13 @@ function getProduct(product) {
 const productId = product;
 const productColor = document.getElementById("colors");
 const productQuantity = document.getElementById("quantity");
-
+console.log(productId);
 // Ecoute  du click du bouton html "ajouter au panier" 
 const button = document.getElementById("addToCart");
 button.addEventListener("click", function() {
     // Références des éléments du produit sélectionné
     const selectedProduct = {
-        selectedId: productId._id,
+        selectedId: productId,
         selectedColor: productColor.value,
         selectedQuantity: productQuantity.value,
     };
