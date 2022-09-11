@@ -32,7 +32,7 @@ function getProduct(product) {
 const productId = product;
 const productColor = document.getElementById("colors");
 const productQuantity = document.getElementById("quantity");
-console.log(productId);
+
 // Ecoute  du click du bouton html "ajouter au panier" 
 const button = document.getElementById("addToCart");
 button.addEventListener("click", function() {
@@ -42,7 +42,7 @@ button.addEventListener("click", function() {
         selectedColor: productColor.value,
         selectedQuantity: productQuantity.value,
     };
-    
+   
     function addToCart() {
         productFinal.push(selectedProduct); // Ajout de l'élément
         localStorage.setItem("productResult", JSON.stringify(productFinal)); // Stock les données + conversion objet JS en chaîne JSON
@@ -92,6 +92,5 @@ button.addEventListener("click", function() {
                 addToCart();
             }
         }
-
     }
 })
