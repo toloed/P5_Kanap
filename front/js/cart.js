@@ -12,34 +12,50 @@ else {
         //Récuprération des informations des produits séléctionnés sur l'API
         fetch(`http://localhost:3000/api/products`)
             .then(response => response.json())
-            .then(items => itemElement(cart, items))
+            .then(items => itemElement(items))
             .catch(error => "Erreur : " + error);
-
+        
         //Intégration des éléments dans le DOM
         function itemElement(items) {
-            document.getElementById("cart__items").innerHTML +=
-            `<article class="cart__item" data-id=${items.selectedId} 
-            data-color=${items.selectedColor}>
-                <div class="cart__item__img">
-                    <img src=${items.imageUrl} alt=${items.altTxt}>
-                </div>
-                <div class="cart__item__content">
-                    <div class="cart__item__content__description">
-                        <h2>${items.name}</h2>
-                        <p>${items.selectedColor}</p>
-                        <p>${items.price}</p>
+            for (let item of items) {
+                document.getElementById("cart__items").innerHTML +=
+                `<article class="cart__item" data-id=${cart.selectedId} 
+                data-color=${cart.selectedColor}>
+                    <div class="cart__item__img">
+                        <img src=${item.imageUrl} alt=${item.altTxt}>
                     </div>
-                    <div class="cart__item__content__settings">
-                        <div class="cart__item__content__settings__quantity">
-                            <p>Qté : </p>
-                            <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${items.selectedQuantity}">
+                    <div class="cart__item__content">
+                        <div class="cart__item__content__description">
+                            <h2>${item.name}</h2>
+                            <p>${cart.selectedColor}</p>
+                            <p>${item.price}</p>
                         </div>
-                        <div class="cart__item__content__settings__delete">
-                            <p class="deleteItem">Supprimer</p>
+                        <div class="cart__item__content__settings">
+                            <div class="cart__item__content__settings__quantity">
+                                <p>Qté : </p>
+                                <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${cart.selectedQuantity}">
+                            </div>
+                            <div class="cart__item__content__settings__delete">
+                                <p class="deleteItem">Supprimer</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </article>`
+                </article>`
+            }
         }
+    }
+}
+
+
+//-------------------- Gestion des quantités + suppression produit + calcul des prix --------------------//
+//Modification des quantités
+function changeQuantity() {
+    const inputs = document.querySelectorAll("itemQuantity");
+
+    for (let input of inputs) {
+        // Ecoute de l'input pour faire les modifications du client
+        input.addEventListener("change", (e) => {
+             
+        } )
     }
 }
